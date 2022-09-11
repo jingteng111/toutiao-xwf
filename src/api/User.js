@@ -3,7 +3,9 @@
  */
 import request from '@/utils/request'
 
-// 用户登录
+/**
+ * 用户登录
+ */
 export const login = data => request({
   method: 'POST',
   url: '/v1_0/authorizations',
@@ -16,4 +18,12 @@ export const login = data => request({
 export const sendSms = mobile => request({
   method: 'GET',
   url: `/v1_0/sms/codes/${mobile}`
+})
+
+/**
+ * 获取用户自己的信息
+ */
+export const getUserInfo = () => request({
+  method: 'GET',
+  url: '/v1_0/user'
 })

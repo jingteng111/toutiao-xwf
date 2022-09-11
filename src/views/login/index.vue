@@ -1,7 +1,16 @@
 <template>
   <div class="login-container">
     <!-- 导航栏 -->
-    <van-nav-bar class="page-nav-bar" title="登录"/>
+    <van-nav-bar
+      class="page-nav-bar"
+      title="登录"
+    >
+     <i
+      slot="left"
+       class="toutiao toutiao-guanbi"
+       @click="$router.back()"
+       ></i>
+    </van-nav-bar>
     <!-- /导航栏 -->
 
     <!-- 登录表单 -->
@@ -98,6 +107,9 @@ export default {
         const { data } = await loginAPI(user)
         this.$store.commit('setUser', data.data)
         this.$toast.success('登录成功')
+
+        // 登录成功，跳转回原来页面
+        this.$route.back()
       } catch (err) {
         if (err.response.status === 400) {
           this.$toast.fail('手机号或验证码错误')
@@ -138,6 +150,12 @@ export default {
 .login-container {
   .toutiao {
     font-size: 37px;
+  }
+  .page-nav-bar {
+    .toutiao {
+      font-size: 20px;
+      color: #fff;
+    }
   }
   .send-sms-btn {
     padding: 0 14px;
