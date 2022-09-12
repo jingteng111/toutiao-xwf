@@ -6,6 +6,7 @@ import Home from '@/views/home'
 import Qa from '@/views/qa'
 import Video from '@/views/video'
 import My from '@/views/my'
+import Search from '@/views/search'
 
 Vue.use(VueRouter)
 
@@ -44,6 +45,11 @@ const routes = [
         component: My
       }
     ]
+  },
+  {
+    path: '/search',
+    name: 'search',
+    component: Search
   }
 ]
 const router = new VueRouter({

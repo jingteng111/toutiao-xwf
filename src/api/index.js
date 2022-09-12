@@ -1,6 +1,7 @@
 import { login, sendSms, getUserInfo, getUserChannels } from '@/api/User'
 import { getArticles } from '@/api/Article'
 import { getAllChannels, addUserChannel, deleteUserChannel } from '@/api/Channel'
+import { getSearchSuggestion, getSearchResult } from '@/api/Search'
 
 // 用户登录
 export const loginAPI = login
@@ -18,3 +19,7 @@ export const getAllChannelsAPI = getAllChannels
 export const addUserChannelAPI = addUserChannel
 // 删除用户指定频道
 export const deleteUserChannelAPI = deleteUserChannel
+// 搜索联想建议
+export const getSearchSuggestionAPI = getSearchSuggestion
+// 搜索结果
+export const getSearchResultAPI = getSearchResult
