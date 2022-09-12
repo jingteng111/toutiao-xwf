@@ -1,5 +1,5 @@
-import { login, sendSms, getUserInfo, getUserChannels } from '@/api/User'
-import { getArticles } from '@/api/Article'
+import { login, sendSms, getUserInfo, getUserChannels, addFollow, deleteFollow } from '@/api/User'
+import { getArticles, getArticleById } from '@/api/Article'
 import { getAllChannels, addUserChannel, deleteUserChannel } from '@/api/Channel'
 import { getSearchSuggestion, getSearchResult } from '@/api/Search'
 
@@ -13,6 +13,8 @@ export const getUserInfoAPI = getUserInfo
 export const getUserChannelsAPI = getUserChannels
 // 加载文章列表数据
 export const getArticlesAPI = getArticles
+// 根据 id 获取指定文章
+export const getArticleByIdAPI = getArticleById
 // 获取所有频道列表
 export const getAllChannelsAPI = getAllChannels
 // 添加用户频道
@@ -23,3 +25,7 @@ export const deleteUserChannelAPI = deleteUserChannel
 export const getSearchSuggestionAPI = getSearchSuggestion
 // 搜索结果
 export const getSearchResultAPI = getSearchResult
+// 添加关注
+export const addFollowAPI = addFollow
+// 取消关注
+export const deleteFollowAPI = deleteFollow
