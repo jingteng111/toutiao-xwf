@@ -25,42 +25,96 @@
       <!-- /文章列表 -->
       </van-tab>
       <div slot="nav-right" class="placeholder"></div>
-      <div slot="nav-right" class="hamburger-btn">
+      <div
+        slot="nav-right"
+        class="hamburger-btn"
+        @click="isChannelEditShow = true"
+      >
         <i class="toutiao toutiao-gengduo"></i>
       </div>
     </van-tabs>
     <!-- /频道列表 -->
+
+    <!-- 频道编辑弹出层 -->
+    <van-popup
+      v-model="isChannelEditShow"
+      closeable
+      close-icon-position="top-left"
+      position="bottom"
+      :style="{ height: '100%' }"
+    >
+      <ChannelEdit
+       :my-channels="channels"
+       :active="active"
+       @addChannel="addChannelFn"
+       @deleteChannel="deleteChannelFn"
+       @update-active="onUpdateActive"
+      ></ChannelEdit>
+    </van-popup>
+    <!-- /频道编辑弹出层 -->
   </div>
 </template>
 
 <script>
 import { getUserChannelsAPI } from '@/api'
-import ArticleList from '@/views/home/components/article-list.vue'
+import ArticleList from '@/views/home/components/article-list'
+import ChannelEdit from '@/views/home/components/channel-edit'
+import { mapState } from 'vuex'
+import { getItem } from '@/utils/storage'
 
 export default {
   name: 'HomeIndex',
   data () {
     return {
       active: 0,
-      channels: [] // 频道列表
+      channels: [], // 频道列表
+      isChannelEditShow: false // 控制编辑频道弹出层的显示状态
     }
   },
   methods: {
     async loadChannels () {
       try {
-        const { data } = await getUserChannelsAPI()
-        this.channels = data.data.channels
-        // console.log(this.channels)
+        let channels = []
+        if (this.user) {
+          // 已登录，请求获取用户频道列表
+          const { data } = await getUserChannelsAPI()
+          channels = data.data.channels
+        } else {
+          // 未登录，判断是否有本地的判断数据
+          const localChannels = getItem('TOUTIAO_CHANNELS')
+          if (localChannels) {
+            channels = localChannels
+          } else {
+            // 获取默认的接口
+            const { data } = await getUserChannelsAPI()
+            channels = data.data.channels
+          }
+        }
+        this.channels = channels
       } catch (error) {
         this.$toast('获取频道数据失败')
       }
+    },
+    addChannelFn (channel) {
+      this.channels.push(channel)
+    },
+    deleteChannelFn (index) {
+      this.channels.splice(index, 1)
+    },
+    onUpdateActive (index, isChannelEditShow = true) {
+      this.active = index
+      this.isChannelEditShow = isChannelEditShow
     }
   },
   created () {
     this.loadChannels()
   },
   components: {
-    ArticleList
+    ArticleList,
+    ChannelEdit
+  },
+  computed: {
+    ...mapState(['user'])
   }
 }
 </script>

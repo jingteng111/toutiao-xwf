@@ -109,7 +109,7 @@ export default {
         this.$toast.success('登录成功')
 
         // 登录成功，跳转回原来页面
-        this.$route.back()
+        this.$router.back()
       } catch (err) {
         if (err.response.status === 400) {
           this.$toast.fail('手机号或验证码错误')

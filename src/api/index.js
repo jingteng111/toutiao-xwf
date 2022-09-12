@@ -1,5 +1,6 @@
 import { login, sendSms, getUserInfo, getUserChannels } from '@/api/User'
 import { getArticles } from '@/api/Article'
+import { getAllChannels, addUserChannel, deleteUserChannel } from '@/api/Channel'
 
 // 用户登录
 export const loginAPI = login
@@ -11,3 +12,9 @@ export const getUserInfoAPI = getUserInfo
 export const getUserChannelsAPI = getUserChannels
 // 加载文章列表数据
 export const getArticlesAPI = getArticles
+// 获取所有频道列表
+export const getAllChannelsAPI = getAllChannels
+// 添加用户频道
+export const addUserChannelAPI = addUserChannel
+// 删除用户指定频道
+export const deleteUserChannelAPI = deleteUserChannel
