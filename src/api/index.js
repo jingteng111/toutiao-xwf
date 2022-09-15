@@ -1,5 +1,5 @@
 import { login, sendSms, getUserInfo, getUserChannels, addFollow, deleteFollow } from '@/api/User'
-import { getArticles, getArticleById } from '@/api/Article'
+import { getArticles, getArticleById, addCollectArticle, deleteCollectArticle, addLikeArticle, deleteLikeArticle } from '@/api/Article'
 import { getAllChannels, addUserChannel, deleteUserChannel } from '@/api/Channel'
 import { getSearchSuggestion, getSearchResult } from '@/api/Search'
 
@@ -29,3 +29,11 @@ export const getSearchResultAPI = getSearchResult
 export const addFollowAPI = addFollow
 // 取消关注
 export const deleteFollowAPI = deleteFollow
+// 收藏文章
+export const addCollectArticleAPI = addCollectArticle
+// 取消收藏文章
+export const deleteCollectArticleAPI = deleteCollectArticle
+// 点赞文章
+export const addLikeArticleAPI = addLikeArticle
+// 取消点赞文章
+export const deleteLikeArticleAPI = deleteLikeArticle
