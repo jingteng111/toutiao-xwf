@@ -1,7 +1,8 @@
 import { login, sendSms, getUserInfo, getUserChannels, addFollow, deleteFollow } from '@/api/User'
-import { getArticles, getArticleById, addCollectArticle, deleteCollectArticle, addLikeArticle, deleteLikeArticle } from '@/api/Article'
+import { getArticles, getArticleById, addCollectArticle, deleteCollectArticle, addLikeArticle, deleteLikeArticle, addComments } from '@/api/Article'
 import { getAllChannels, addUserChannel, deleteUserChannel } from '@/api/Channel'
 import { getSearchSuggestion, getSearchResult } from '@/api/Search'
+import { getComments, addLikeComments, deleteLikeComments } from '@/api/Comments'
 
 // 用户登录
 export const loginAPI = login
@@ -37,3 +38,11 @@ export const deleteCollectArticleAPI = deleteCollectArticle
 export const addLikeArticleAPI = addLikeArticle
 // 取消点赞文章
 export const deleteLikeArticleAPI = deleteLikeArticle
+// 获取文章评论列表
+export const getCommentsAPI = getComments
+// 评论点赞
+export const addLikeCommentsAPI = addLikeComments
+// 取消评论点赞
+export const deleteLikeCommentsAPI = deleteLikeComments
+// 发布文章评论或评论回复
+export const addCommentsAPI = addComments

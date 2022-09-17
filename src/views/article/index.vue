@@ -51,6 +51,14 @@
           ref="article-content"
         ></div>
         <van-divider>正文结束</van-divider>
+        <!-- 文章评论列表 -->
+        <CommentList
+          :source="article.art_id"
+          :clist="commentList"
+          @post-list="onPostList"
+          @onload-success="totalCommentCount = $event.total_count"
+        />
+        <!-- /文章评论列表 -->
          <!-- 底部区域 -->
         <div class="article-bottom">
           <van-button
@@ -58,11 +66,12 @@
             type="default"
             round
             size="small"
+            @click="isPostShow = true"
           >写评论</van-button>
           <van-icon
             class="comment-icon"
             name="comment-o"
-            bagge="123"
+            :badge="totalCommentCount"
             color="#777"
           />
           <CollectArticle
@@ -78,6 +87,18 @@
           <van-icon name="share" color="#777777"></van-icon>
         </div>
         <!-- /底部区域 -->
+
+        <!-- 发布评论 -->
+        <van-popup
+          v-model="isPostShow"
+          position="bottom"
+        >
+          <CommentPost
+            :target="article.art_id"
+            @post-success="onPostSuccess"
+          />
+        </van-popup>
+        <!-- /发布评论 -->
       </div>
       <!-- /加载完成-文章详情 -->
 
@@ -96,6 +117,16 @@
       </div>
       <!-- /加载失败：其它未知错误（例如网络原因或服务端异常） -->
     </div>
+
+    <!-- 评论回复 -->
+   <!--  <van-popup
+      v-model="isReplyShow"
+      position="bottom"
+      style="100%"
+    >
+
+    </van-popup> -->
+    <!-- /评论回复 -->
   </div>
 </template>
 
@@ -105,6 +136,8 @@ import { ImagePreview } from 'vant'
 import FollowUser from '@/components/follow-user'
 import CollectArticle from '@/components/collect-article'
 import LikeArticle from '@/components/like-article'
+import CommentList from '@/views/article/components/comment-list'
+import CommentPost from '@/views/article/components/comment-post'
 
 export default {
   name: 'ArticleIndex',
@@ -113,7 +146,10 @@ export default {
       article: {}, // 文章详情
       loading: true, // 加载中的 loading 状态
       errStatus: 0, // 失败的状态码
-      followLoading: false
+      followLoading: false,
+      totalCommentCount: 0,
+      isPostShow: false, // 控制发布评论的显示状态
+      commentList: [] // 评论列表
     }
   },
   props: {
@@ -157,6 +193,16 @@ export default {
           })
         }
       })
+    },
+    onPostList (val) {
+      this.commentList = JSON.parse(JSON.stringify(val))
+    },
+    onPostSuccess (data) {
+      // 关闭弹出层
+      this.isPostShow = false
+
+      // 将发布的内容显示在顶部
+      this.commentList.unshift(data.new_obj)
     }
   },
   created () {
@@ -165,7 +211,9 @@ export default {
   components: {
     FollowUser,
     CollectArticle,
-    LikeArticle
+    LikeArticle,
+    CommentList,
+    CommentPost
   }
 }
 </script>
@@ -300,12 +348,6 @@ export default {
       height: 40px;
       line-height: 40px;
       color: #777777
-    }
-    .collect-btn--collected {
-      color: #ffa500;
-    }
-    .like-btn--liked {
-      color: #e5645f;
     }
   }
 }

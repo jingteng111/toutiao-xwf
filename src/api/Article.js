@@ -57,3 +57,12 @@ export const deleteLikeArticle = target => request({
   method: 'DELETE',
   url: `/v1_0/article/likings/${target}`
 })
+
+/**
+ * 发布文章评论或评论回复
+ */
+export const addComments = data => request({
+  method: 'POST',
+  url: '/v1_0/comments',
+  data
+})

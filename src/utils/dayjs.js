@@ -13,6 +13,6 @@ dayjs.extend(relativeTime)
 dayjs.locale('zh-cn')
 
 // 全局过滤器：处理相对时间
-Vue.filter('relativeTime', () => {
-  return dayjs().to(dayjs('2022'))
+Vue.filter('relativeTime', value => {
+  return dayjs().to(dayjs(value))
 })
