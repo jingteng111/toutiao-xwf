@@ -55,6 +55,7 @@
         <CommentList
           :source="article.art_id"
           :clist="commentList"
+          @reply-click="onReplyClick"
           @post-list="onPostList"
           @onload-success="totalCommentCount = $event.total_count"
         />
@@ -117,16 +118,6 @@
       </div>
       <!-- /加载失败：其它未知错误（例如网络原因或服务端异常） -->
     </div>
-
-    <!-- 评论回复 -->
-   <!--  <van-popup
-      v-model="isReplyShow"
-      position="bottom"
-      style="100%"
-    >
-
-    </van-popup> -->
-    <!-- /评论回复 -->
   </div>
 </template>
 
@@ -149,7 +140,9 @@ export default {
       followLoading: false,
       totalCommentCount: 0,
       isPostShow: false, // 控制发布评论的显示状态
-      commentList: [] // 评论列表
+      commentList: [], // 评论列表
+      isReplyShow: false,
+      currentComment: {} // 当前点击回复的评论
     }
   },
   props: {
@@ -203,6 +196,12 @@ export default {
 
       // 将发布的内容显示在顶部
       this.commentList.unshift(data.new_obj)
+    },
+    onReplyClick (comment) {
+      this.currentComment = comment
+
+      // 显示评论回复弹出层
+      this.isReplyShow = true
     }
   },
   created () {

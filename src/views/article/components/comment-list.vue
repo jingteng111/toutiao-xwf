@@ -5,6 +5,7 @@
       :finished="finished"
       finished-text="没有更多了"
       :error="error"
+      :immediate-check="false"
       error-text="加载失败，请点击重试"
       @load="onLoad"
     >
@@ -12,6 +13,7 @@
         v-for="(item, index) in clist"
         :key="index"
         :comment="item"
+        @reply-click="$emit('reply-click', $event)"
       />
     </van-list>
   </div>
@@ -40,6 +42,14 @@ export default {
     },
     clist: {
       type: Array
+    },
+    type: {
+      type: String,
+      // 自定义 prop 数据验证
+      validator (value) {
+        return ['a', 'c'].includes(value)
+      },
+      default: 'a'
     }
   },
   methods: {
@@ -47,7 +57,7 @@ export default {
       try {
         // 获取数据
         const { data } = await getCommentsAPI({
-          type: 'a', // 评论类型
+          type: this.type, // 评论类型
           source: this.source, // 文章id或评论id
           offset: this.offset, // 获取下一页数据的标记
           limit: this.limit // 获取评论个数
@@ -79,6 +89,7 @@ export default {
     }
   },
   created () {
+    this.loading = true
     this.onLoad()
   },
   components: {
